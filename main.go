@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import "github.com/Aliemre03/pokedexcli/command"
 
 func main() {
-	fmt.Printf("hello")
+	command.StartRepl()
 }
