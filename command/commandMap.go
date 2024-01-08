@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func CallbackMap(config *Config) error {
+func CallbackMap(config *Config, args ...string) error {
 	location, err := config.PokeapiClient.ListLocationAreas(config.nextLocation)
 	if err != nil {
 		return err
@@ -21,7 +21,7 @@ func CallbackMap(config *Config) error {
 	return nil
 }
 
-func CallbackMapb(config *Config) error {
+func CallbackMapb(config *Config, args ...string) error {
 	location, err := config.PokeapiClient.ListLocationAreas(config.prevLocation)
 	if err != nil {
 		return err
