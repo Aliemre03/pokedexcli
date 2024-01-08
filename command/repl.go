@@ -3,14 +3,21 @@ package command
 import (
 	"bufio"
 	"fmt"
+	"github.com/Aliemre03/pokedexcli/internal/pokeapi"
 	"os"
 	"strings"
 )
 
+type Config struct {
+	PokeapiClient *pokeapi.Client
+	nextLocation  *string
+	prevLocation  *string
+}
+
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(*Config) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -30,10 +37,15 @@ func getCommands() map[string]cliCommand {
 			description: "List location areas",
 			callback:    CallbackMap,
 		},
+		"mapb": {
+			name:        "mapb",
+			description: "List previoes location areas",
+			callback:    CallbackMapb,
+		},
 	}
 }
 
-func StartRepl() {
+func StartRepl(config *Config) {
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print(" >")
@@ -51,7 +63,7 @@ func StartRepl() {
 			fmt.Println("Unknown command")
 			continue
 		}
-		command.callback()
+		command.callback(config)
 
 	}
 }

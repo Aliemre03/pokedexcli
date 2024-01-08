@@ -6,9 +6,13 @@ import (
 	"net/http"
 )
 
-func (c *Client) ListLocationAreas() (*LocationAreasResp, error) {
+func (c *Client) ListLocationAreas(pageUrl *string) (*LocationAreasResp, error) {
 	var locationArea LocationAreasResp
 	endPoint := baseURL + "location-area/"
+
+	if pageUrl != nil {
+		endPoint = *pageUrl
+	}
 
 	req, err := http.NewRequest(http.MethodGet, endPoint, nil)
 	if err != nil {
