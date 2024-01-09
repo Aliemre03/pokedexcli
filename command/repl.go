@@ -12,6 +12,7 @@ type Config struct {
 	PokeapiClient *pokeapi.Client
 	nextLocation  *string
 	prevLocation  *string
+	CaughtPokemon map[string]pokeapi.Pokemon
 }
 
 type cliCommand struct {
@@ -47,6 +48,21 @@ func getCommands() map[string]cliCommand {
 			description: "List the pokemon in the location area",
 			callback:    CallbackExplore,
 		},
+		"catch": {
+			name:        "catch <pokemon-name>",
+			description: "Catch a pokemon in the location area",
+			callback:    callbackCatch,
+		},
+		"inspect": {
+			name:        "inspect <pokemon-name>",
+			description: "Inspect a pokemon",
+			callback:    callbackInspect,
+		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "List the caught pokemon",
+			callback:    callbackPokedex,
+		},
 	}
 }
 
@@ -70,7 +86,10 @@ func StartRepl(config *Config) {
 			fmt.Println("Unknown command")
 			continue
 		}
-		command.callback(config, args...)
+		err := command.callback(config, args...)
+		if err != nil {
+			return
+		}
 
 	}
 }

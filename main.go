@@ -8,6 +8,8 @@ import (
 func main() {
 	config := command.Config{
 		PokeapiClient: pokeapi.NewClient(),
+		CaughtPokemon: make(map[string]pokeapi.Pokemon),
 	}
+	command.CallbackHelp(&config)
 	command.StartRepl(&config)
 }
